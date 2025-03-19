@@ -14,11 +14,14 @@ fn main() {
 
 fn action<'a>(arena: &'a Bump, cmds: &mut Vec<'a, Command<'a>>) {
     let mut cmd_stack = Vec::new_in(arena);
-    action_recursive(arena,cmds, &mut cmd_stack);
+    action_recursive(arena, cmds, &mut cmd_stack);
 }
 
-fn action_recursive<'a>(arena: &'a Bump, cmds: &mut Vec<'a, Command<'a>>, cmd_stack: &mut Vec<'a, Vec<'a, Command<'a>>>) {
-
+fn action_recursive<'a>(
+    arena: &'a Bump,
+    cmds: &mut Vec<'a, Command<'a>>,
+    cmd_stack: &mut Vec<'a, Vec<'a, &Command<'a>>>,
+) {
     let mut breaks = Vec::new_in(arena);
 
     cmds.iter().for_each(|cmd| {
@@ -28,6 +31,4 @@ fn action_recursive<'a>(arena: &'a Bump, cmds: &mut Vec<'a, Command<'a>>, cmd_st
     });
 
     cmd_stack.push(breaks)
-    
 }
-
